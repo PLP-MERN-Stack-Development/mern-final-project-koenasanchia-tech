@@ -1,0 +1,156 @@
+1. QuickRide – MERN Stack Capstone Project Plan
+
+Core Features (MERN Version)
+Commuter Features
+
+Create account / login
+
+View available taxis
+
+Book a seat
+
+Track approximate taxi location (basic simulated tracking)
+
+Get notifications when taxi is near
+
+View ride history
+
+
+Driver Features
+
+Driver login
+
+Mark taxi as “Available” / “On Route”
+
+Receive passenger booking requests
+
+Accept / decline requests
+
+View total daily trips
+
+View heatmap of demand (simple admin dashboard later)
+
+
+Admin Features (Optional but recommended)
+
+See list of drivers
+
+See list of commuters
+
+View system statistics
+
+2. MongoDB Database Schema
+Users Collection (commuters & drivers)
+
+{
+  _id,
+  name,
+  email,
+  password,
+  role: "commuter" | "driver" | "admin",
+  phone,
+  createdAt
+}
+
+Rides Collection
+{
+  _id,
+  commuterId,
+  driverId,
+  pickupLocation,
+  destination,
+  status: "pending" | "accepted" | "completed" | "cancelled",
+  timestamp
+}
+
+Driver Status Collection
+{
+  _id,
+  driverId,
+  currentLocation,
+  isAvailable,
+  lastUpdated
+}
+
+Notifications Collection
+{
+  _id,
+  userId,
+  message,
+  read: boolean,
+  timestamp
+}
+
+3. Express API Design
+Auth Routes
+
+POST /api/auth/register
+POST /api/auth/login
+
+Commuter Routes
+GET  /api/drivers/available
+POST /api/rides/book
+GET  /api/rides/my-rides
+
+Driver Routes
+POST /api/driver/status
+GET  /api/driver/requests
+PUT  /api/rides/accept/:id
+PUT  /api/rides/complete/:id
+
+Admin Routes
+GET /api/admin/users
+GET /api/admin/rides
+GET /api/admin/statistics
+
+4. React Frontend Pages
+Commuter App Pages
+
+Login / Register
+Home Page (Available taxis list)
+Book Ride Page
+Ride Status Page (updates in real-time or with polling)
+Profile Page
+
+Driver App Pages
+Driver Login
+Set Availability Page
+Incoming Requests Page
+Trip Summary Page
+
+Admin Dashboard
+User Management
+Driver Availability Board
+Ride Statistics
+
+5. Frontend Structure
+
+src/
+ ├── pages/
+ ├── components/
+ ├── context/
+ ├── api/
+ ├── hooks/
+ ├── App.js
+ └── index.js
+
+API Integration Example
+
+axios.get('/api/drivers/available')
+
+6. Testing Plan
+Backend (Jest + Supertest)
+
+Test:
+Authentication
+Booking ride
+Accepting ride
+Fetching available drivers
+
+Frontend (React Testing Library)
+
+Test:
+Form submission
+List of drivers renders
+Booking button works
+Login form validation
